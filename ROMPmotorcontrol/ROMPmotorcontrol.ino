@@ -2,19 +2,14 @@
 #include <Adafruit_MotorShield.h>
 #include "utility/Adafruit_MS_PWMServoDriver.h"
 
-Adafruit_MotorShield AFMS;
-Adafruit_DCMotor *liftMotor1;
-Adafruit_DCMotor *liftMotor2;
-Adafruit_DCMotor *internalRotationMotor;
-Adafruit_DCMotor *forearmRotationMotor;
+Adafruit_MotorShield AFMS = Adafruit_MotorShield();
+Adafruit_DCMotor *liftMotor1 = AFMS.getMotor(1);
+Adafruit_DCMotor *liftMotor2 = AFMS.getMotor(2);
+Adafruit_DCMotor *internalRotationMotor = AFMS.getMotor(3);
+Adafruit_DCMotor *forearmRotationMotor = AFMS.getMotor(4);
 
 void setup() {
-  // put your setup code here, to run once:
-  AFMS = Adafruit_MotorShield();
-  liftMotor1 = AFMS.getMotor(1);
-  liftMotor2 = AFMS.getMotor(2);
-  internalRotationMotor = AFMS.getMotor(3);
-  forearmRotationMotor = AFMS.getMotor(4);
+  // put your setup code here, to run once
   AFMS.begin();
   liftMotor1->setSpeed(100);
   liftMotor2->setSpeed(100);
@@ -23,6 +18,8 @@ void setup() {
 }
 
 void lift(int direction, int speed, int time) {
+  liftMotor1->setSpeed(speed);
+  liftMotor2->setSpeed(speed);
   if(direction == 1) {
     liftMotor1->run(FORWARD);
     liftMotor2->run(FORWARD);
@@ -30,9 +27,9 @@ void lift(int direction, int speed, int time) {
     liftMotor1->run(RELEASE);
     liftMotor2->run(RELEASE);
   }
-  if(direction == 1) {
-    liftMotor1->run(FORWARD);
-    liftMotor2->run(FORWARD);
+  if(direction == -1) {
+    liftMotor1->run(BACKWARD);
+    liftMotor2->run(BACKWARD);
     delay(time);
     liftMotor1->run(RELEASE);
     liftMotor2->run(RELEASE);
