@@ -35,7 +35,45 @@ void lift(int direction, int speed, int time) {
     liftMotor2->run(RELEASE);
   }
 }
+int signal1[] = {1, 100};
+int signal2[] = {1, 200};
+int counter = 0;
+
 void loop() {
   // put your main code here, to run repeatedly:
+  //We get signal1, signal2, and signal3 from the sensors
+  //signals have (direction, speed)
+  
+  if (signal1!=NULL){
+    lift(signal1[0], signal1[1],1);
+    }
+ if (signal2!=NULL){
+    rotate(signal2[0], signal2[1],1);
+  }
+ counter+=1;
+ if (counter==1000){
+  signal2[] = NULL;
+  }
+}
+ 
+ 
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
   
 }
