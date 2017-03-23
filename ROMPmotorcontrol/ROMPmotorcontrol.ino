@@ -40,35 +40,39 @@ void lift(int direction, int speed, int time) {
   }
 }
 
-int signal1[] = {1, 100};
-int signal2[] = {1, 200};
+int signal1[] = {1, 150};
+int signal2[] = {1, 150};
 int counter = 0;
 
 void loop() {
   // put your main code here, to run repeatedly:
   //We get signal1, signal2, and signal3 from the sensors
   //signals have (direction, speed)
-  
-  if (signal1!=NULL){
-    lift(signal1[0], signal1[1],1);
-    }
- if (signal2!=NULL){
+  if (counter==0){
+    
+    rotateForearm(signal1[0], signal1[1],1);
     rotateInternal(signal2[0], signal2[1],1);
-  }
+    
+   }
  counter+=1;
- if (counter==1000){
-  signal2 = [NULL];
+ if (counter==10000){
+    signal2[0] = 0;
+    internalRotationMotor->run(RELEASE);
+  }
+ if (counter ==20000){
+  forearmRotationMotor->run(RELEASE);
+    
   }
 }
  
-}
+
 
 void rotateInternal(int direction, int speed, int time) {
   internalRotationMotor->setSpeed(speed);
   if(direction == 1) {
     internalRotationMotor->run(FORWARD);
-    delay(time);
-    internalRotationMotor->run(RELEASE);
+//    delay(time);
+//    internalRotationMotor->run(RELEASE);
   }
   if(direction == -1) {
     internalRotationMotor->run(BACKWARD);
@@ -80,8 +84,8 @@ void rotateForearm(int direction, int speed, int time) {
   forearmRotationMotor->setSpeed(speed);
   if(direction == 1) {
     forearmRotationMotor->run(FORWARD);
-    delay(time);
-    forearmRotationMotor->run(RELEASE);
+//    delay(time);
+//    forearmRotationMotor->run(RELEASE);
   }
   if(direction == -1) {
     forearmRotationMotor->run(BACKWARD);
