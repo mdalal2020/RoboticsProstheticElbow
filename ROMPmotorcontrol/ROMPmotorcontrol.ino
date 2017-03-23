@@ -9,13 +9,17 @@ Adafruit_DCMotor *internalRotationMotor = AFMS.getMotor(3);
 Adafruit_DCMotor *forearmRotationMotor = AFMS.getMotor(4);
 
 void setup() {
-  // put your setup code here, to run once
+  // put your setup code here, to run oncef
+  Serial.begin(9600);
   AFMS.begin();
   liftMotor1->setSpeed(100);
   liftMotor2->setSpeed(100);
   internalRotationMotor->setSpeed(100);
   forearmRotationMotor->setSpeed(100); 
 }
+void lift(int direction, int speed, int time);
+void rotateInternal(int direction, int speed, int time);
+void rotateForearm(int direction, int speed, int time);
 
 void lift(int direction, int speed, int time) {
   liftMotor1->setSpeed(speed);
@@ -35,6 +39,7 @@ void lift(int direction, int speed, int time) {
     liftMotor2->run(RELEASE);
   }
 }
+
 int signal1[] = {1, 100};
 int signal2[] = {1, 200};
 int counter = 0;
@@ -48,32 +53,41 @@ void loop() {
     lift(signal1[0], signal1[1],1);
     }
  if (signal2!=NULL){
-    rotate(signal2[0], signal2[1],1);
+    rotateInternal(signal2[0], signal2[1],1);
   }
  counter+=1;
  if (counter==1000){
-  signal2[] = NULL;
+  signal2 = [NULL];
   }
 }
  
- 
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
 }
+
+void rotateInternal(int direction, int speed, int time) {
+  internalRotationMotor->setSpeed(speed);
+  if(direction == 1) {
+    internalRotationMotor->run(FORWARD);
+    delay(time);
+    internalRotationMotor->run(RELEASE);
+  }
+  if(direction == -1) {
+    internalRotationMotor->run(BACKWARD);
+    delay(time);
+    internalRotationMotor->run(RELEASE);
+  }
+}
+void rotateForearm(int direction, int speed, int time) {
+  forearmRotationMotor->setSpeed(speed);
+  if(direction == 1) {
+    forearmRotationMotor->run(FORWARD);
+    delay(time);
+    forearmRotationMotor->run(RELEASE);
+  }
+  if(direction == -1) {
+    forearmRotationMotor->run(BACKWARD);
+    delay(time);
+    forearmRotationMotor->run(RELEASE);
+  }
+}
+
+
