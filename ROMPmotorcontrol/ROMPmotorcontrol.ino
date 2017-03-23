@@ -25,14 +25,14 @@ void lift(int direction, int speed, int time) {
   liftMotor1->setSpeed(speed);
   liftMotor2->setSpeed(speed);
   if(direction == 1) {
-    liftMotor1->run(FORWARD);
+    liftMotor1->run(BACKWARD);
     liftMotor2->run(FORWARD);
     delay(time);
     liftMotor1->run(RELEASE);
     liftMotor2->run(RELEASE);
   }
   if(direction == -1) {
-    liftMotor1->run(BACKWARD);
+    liftMotor1->run(FORWARD);
     liftMotor2->run(BACKWARD);
     delay(time);
     liftMotor1->run(RELEASE);
@@ -49,20 +49,20 @@ void loop() {
   //We get signal1, signal2, and signal3 from the sensors
   //signals have (direction, speed)
   
-  if (signal1!=NULL){
-    lift(signal1[0], signal1[1],1);
-    }
- if (signal2!=NULL){
-    rotateInternal(signal2[0], signal2[1],1);
-  }
- counter+=1;
- if (counter==1000){
-  signal2 = [NULL];
-  }
+//  if (signal1!=NULL){
+//    lift(signal1[0], signal1[1],1);
+//    }
+// if (signal2!=NULL){
+//    rotateInternal(signal2[0], signal2[1],1);
+//  }
+// counter+=1;
+// if (counter==1000){
+//  signal2 = [NULL];
+//  }
+   lift(1, 100, 1000);
+   delay(3000);
 }
  
-}
-
 void rotateInternal(int direction, int speed, int time) {
   internalRotationMotor->setSpeed(speed);
   if(direction == 1) {
